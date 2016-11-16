@@ -10,7 +10,7 @@
 
 #include "stdafx.h"
 
-#define ANCHOMUNDO 70
+#define ANCHOMUNDO 50
 #define FPS 20 //Frames por segundo
 
 //---INICIALIZACION DE FUNCIONES---
@@ -29,8 +29,9 @@ bool disparar = false;
 int contadorPosicionBala = 0;
 int direccionBala = 1; //+1 a la derecha -1 a la izquierda
 
-					   //Variables generales
-int delay = 1000 / 20;
+//Variables generales
+int delay = 1000 / FPS;
+int score = 0;
 
 //Variables enemigo
 int contadorPosicionEnemigo = 0;
@@ -136,6 +137,9 @@ int main()
 
 				disparar = false;
 				contadorPosicionBala = 0;
+				posicionBala = posicionPersonaje;
+
+				score = score + 1;
 
 			}
 
@@ -162,13 +166,13 @@ int main()
 		for (int i = 0; i <= ANCHOMUNDO; i++) {
 
 			if(i== posicionPersonaje && personajeVivo)  printf("%c", '*');		//imprime personaje
-			else if (i == posicionBala && disparar)  printf("%c", '.');			//imprime bala
+			else if (i == posicionBala && disparar)  printf("%c", '~');			//imprime bala
 			else if (i == posicionEnemigo && enemigoVivo)  printf("%c", 'I');	//imprime enemigo
 			else  printf("%c", '-');											//imprime mundo
 		}
 
 		//imprimir score
-		printf("\n                       Score: %d", 2);
+		printf("\n                       Score: %d", score);
 		
 		Sleep(delay);
 		system("cls");
@@ -187,9 +191,13 @@ int main()
 
 void reiniciarJuego() {
 	system("cls");
-	//Pone el mundo al medio
-	printf("\n\n\n\n\n\n\n\n\n\n\n\n                      ");
-	printf("GAME OVER");
-	Sleep(2000);
+	printf("\n\n\n\n\n\n\n\n\n\n\n\n                    ");	//Pone el print al medio
+	printf("GAME OVER\n");
+	printf("                    ");							//Pone el print al medio
+	printf("Score: %d", score);
+	Sleep(4000);
+	posicionPersonaje = ANCHOMUNDO / 2;
+	disparar = false;
 	personajeVivo = true;
+	score = 0;
 }
